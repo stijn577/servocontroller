@@ -1,0 +1,6 @@
+- [x] **switch over to hal2, which should be more user friendly**
+- [x] **set up basic config**
+- [ ] **write at command library crate**
+- [ ] **set up master device to connect to**
+- [ ] **get data from sensor**
+- [ ] **send data to master device**

@@ -1,0 +1,26 @@
+# Makefile for cargo using cargo make
+
+# attach probe to already running process
+[tasks.attach]
+dependencies = ["build"]
+command = "probe-rs"
+args = [
+    "attach",
+    "--chip",
+    "STM32F401CCU6",
+    "./target/thumbv7em-none-eabihf/debug/rtic_testing",
+]
+
+[tasks.test]
+dependencies = ["build"]
+command = "cargo"
+args = ["test", "--test", "${@}"]
+
+[tasks.tests]
+dependencies = ["build"]
+command = "cargo"
+args = ["test", "--test", "tests"]
+
+[tasks.list]
+command = "probe-rs"
+args = ["list"]

@@ -1,0 +1,62 @@
+[package]
+name = "servocontroller"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# core specific libraries
+alloc-cortex-m = "0.4.4"
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7"
+
+# FFI with C
+# cty = "0.2.2" 
+
+# interrupt/async runtime
+rtic = { version = "2.0.1", features = ["thumbv7-backend"] }
+rtic-monotonics = { version = "1.5.0", features = [
+    "cortex-m-systick",
+    "stm32f401cc",
+    "stm32_tim2",
+] }
+
+# logging and panic handling
+defmt = { version = "0.3.5", features = ["alloc"] }
+panic-probe = { version = "0.3.1", features = ["print-defmt"] }
+defmt-rtt = "0.4.0"
+
+# error handling
+thiserror-no-std = "2.0.2"
+
+uchan = { version = "0.1.4", default-features = false }
+
+[dependencies.stm32f4xx-hal]
+version = "*"
+features = ["stm32f401", "rtic2", "defmt", "cortex-m-rtic"]
+
+[dev-dependencies]
+defmt-test = "0.3.1"
+# rtic_testing = { path = "../rtic_testing" }
+
+# [[bin]]
+# name = "servocontroller"
+# harness = false
+# test = false
+
+
+# Set the default for dependencies.
+[profile.dev.package."*"]
+opt-level = "s"
+
+[profile.release]
+codegen-units = 1
+incremental = true
+debug = true
+lto = true
+opt-level = "s"
+
+[build-dependencies]
+cc = "1.0.83"
+# cmake = "0.1.50"
